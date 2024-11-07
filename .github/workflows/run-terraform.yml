@@ -10,10 +10,6 @@ jobs:
     permissions:
       id-token: write
       contents: read
-    defaults:
-      run: 
-        shell: bash
-        working-directory: ./terraform
     
     steps:
       - name: Configure AWS Credentials from Test account 
