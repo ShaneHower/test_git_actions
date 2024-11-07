@@ -1,0 +1,48 @@
+name: 'Terraform Plan'
+
+on: 
+  pull_request:
+
+jobs:
+  terraform:
+    name: "Terraform Infra Change Managment"
+    runs-on: ubuntu-latest
+    defaults:
+      run: 
+        shell: bash
+        working-directory: ./terraform
+    
+    steps:
+      - name: Configure AWS Credentials from Test account 
+          uses: aws-actions/configure-aws-credentials@v4
+          with: 
+            role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/GitHubActionsDeployPolicy
+            aws-region: us-east-1
+      
+      - name: Checkout the repo to the runner 
+        uses: actions/checkout@v2
+      
+      - name: Setup Terraform with specified version on the runner 
+        uses: hashicorp/setup-terraform@v2
+        with: 
+          terraform_version: 1.7.2
+    
+      - name: Terraform init 
+        id: init
+        run: terraform init -backend-config="bucket=picklepokeyhouse"
+      
+      - name: terraform format
+        run: terraform fmt -check
+      
+      - name: Terraform validate
+        id: validate
+        run: terraform validate
+        
+      - name: Terraform plan 
+        id: plan
+        run: terraform plan -no-color -input=false
+        continue-on-error: true
+      
+      - name: Terraform apply
+        run: terraform apply -auto-approve -input=false
+        
