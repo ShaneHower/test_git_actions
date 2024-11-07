@@ -18,6 +18,10 @@ jobs:
           role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/GitHubActionsDeployPolicy
           aws-region: us-east-1
       
+      - name: Fetch the caller identity
+        run: |
+          aws sts get-caller-identity
+      
       - name: Checkout the repo to the runner 
         uses: actions/checkout@v2
       
