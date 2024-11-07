@@ -14,10 +14,10 @@ jobs:
     
     steps:
       - name: Configure AWS Credentials from Test account 
-          uses: aws-actions/configure-aws-credentials@v4
-          with: 
-            role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/GitHubActionsDeployPolicy
-            aws-region: us-east-1
+        uses: aws-actions/configure-aws-credentials@v4
+        with: 
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/GitHubActionsDeployPolicy
+          aws-region: us-east-1
       
       - name: Checkout the repo to the runner 
         uses: actions/checkout@v2
