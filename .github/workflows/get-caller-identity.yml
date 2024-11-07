@@ -4,7 +4,7 @@ on:
 jobs: 
   get_caller_identity:
     name: Get Caller Identity
-    runs-on: unbuntu-latest
+    runs-on: ubuntu-latest
     permissions:
       id-token: write
       contents: read
