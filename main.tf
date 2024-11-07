@@ -7,6 +7,12 @@ terraform {
   }
 
   required_version = ">= 1.2.0"
+  
+  backend "s3" {
+    bucket = "picklepokeyhouse"
+	key = "terraform/terraform.tfstate"
+	region = "us-east-1"
+  }
 }
 
 provider "aws" {
